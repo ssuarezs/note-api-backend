@@ -11,19 +11,19 @@ app.use(logger)
 let notes = [  
 	{
 		id: 1,
-		content: 'leuhaoel',
+		content: 'Nota 1',
 		important: true,
 		date: '2019-04-30T18:39:34.091Z'
 	},
 	{
 		id: 2,
-		content: 'leuhaoel',
+		content: 'Nota 2',
 		important: false,
 		date: '2019-04-30T18:39:34.091Z'
 	},
 	{
 		id: 3,
-		content: 'leuhaoel',
+		content: 'Nota 3',
 		important: false,
 		date: '2019-04-30T18:39:34.091Z'
 	}
