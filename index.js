@@ -78,6 +78,25 @@ app.post('/api/notes', (req, res) => {
 	res.status(201).json(newNote)
 })
 
+app.put('/api/notes/:id', (request, response, next) => {
+  const { id } = request.params
+  const note = request.body
+
+  const newNoteInfo = {
+		...note,
+		id: parseInt(id),
+  }
+
+	for(let i = 0; i<notes.length; i++){
+		if(notes[i].id === newNoteInfo.id){
+			notes[i] = {...newNoteInfo}
+			response.status(200).json(newNoteInfo)
+		}
+	}
+
+})
+
+
 
 app.use((req, res, next) => {
 	res.status(404).json({
