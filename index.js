@@ -4,6 +4,7 @@ require('./mongo')
 const express = require('express')
 const cors = require('cors')
 const Note = require('./models/Note')
+
 const notFound = require('./middleware/notFound')
 const handleError = require('./middleware/handleError')
 
