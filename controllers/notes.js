@@ -2,6 +2,8 @@ const notesRouter = require('express').Router()
 const Note = require('../models/Note')
 const User = require('../models/User')
 
+const { userExtractor } = require('../utils/middleware')
+
 notesRouter.get('/', async(request, response) => {
   const notes = await Note.find({})
     .populate('user', {
@@ -20,9 +22,19 @@ notesRouter.get('/:id', async (request, response, next) => {
   }
 })
 
-notesRouter.post('/', async (request, response, next) => {
-  const {content, important = false, userId} = request.body
-  const user = await User.findById(userId)
+notesRouter.post('/', userExtractor, async (request, response, next) => {
+  const {
+    content, 
+    important = false
+  } = request.body
+
+  const user = await User.findById(request.userId)
+
+  if (!content) {
+    return response.status(400).json({
+      error: 'required "content" field is missing'
+    })
+  }
 
   const note = new Note({
     content,
@@ -37,6 +49,8 @@ notesRouter.post('/', async (request, response, next) => {
   await user.save()
   
   response.json(savedNote)
+  
+  next()
 })
 
 notesRouter.delete('/:id', async (request, response, next) => {
